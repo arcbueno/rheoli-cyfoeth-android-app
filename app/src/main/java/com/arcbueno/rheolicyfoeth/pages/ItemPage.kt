@@ -16,8 +16,8 @@ import com.arcbueno.rheolicyfoeth.repositories.DepartmentRepository
 import com.arcbueno.rheolicyfoeth.repositories.ItemRepository
 
 
-private val itemRepository = ItemRepository()
-private val departmentRepository = DepartmentRepository()
+private val itemRepository = ItemRepository
+private val departmentRepository = DepartmentRepository
 
 @Composable
 fun ItemPage() {

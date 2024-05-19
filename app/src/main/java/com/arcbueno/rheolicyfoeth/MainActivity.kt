@@ -2,38 +2,40 @@ package com.arcbueno.rheolicyfoeth
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
-import com.arcbueno.rheolicyfoeth.repositories.DepartmentRepository
-import com.arcbueno.rheolicyfoeth.repositories.ItemRepository
 import com.arcbueno.rheolicyfoeth.ui.theme.RheoliCyfoethTheme
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.NavController
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
+import com.arcbueno.rheolicyfoeth.pages.CreateItemPage
 import com.arcbueno.rheolicyfoeth.pages.DepartmentPage
 import com.arcbueno.rheolicyfoeth.pages.ItemPage
 
@@ -62,29 +64,59 @@ fun AppPreview() {
     }
 }
 
+
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun MainPage(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
-    Scaffold(bottomBar = { AppBottomNavigation(navController = navController) }) {
+    val fabIsVisible = rememberSaveable { mutableStateOf(true) }
+    navController.let {
+        val navBackStackEntry by it.currentBackStackEntryAsState()
+        val currentRoute = navBackStackEntry?.destination?.route
+        fabIsVisible.value = currentRoute == BottomNavItem.Items.route
+    }
+
+    Scaffold(
+        bottomBar = { AppBottomNavigation(navController = navController, fabIsVisible) },
+        floatingActionButton = {
+            AnimatedVisibility(
+                visible = fabIsVisible.value,
+                enter = slideInHorizontally(initialOffsetX = { it * 2 }),
+                exit = slideOutHorizontally(targetOffsetX = { it * 2 }),
+            ) {
+                FloatingActionButton(
+                    onClick = {
+                        navController.navigate(Routes.createItem)
+                    },
+                ) {
+                    Icon(Icons.Filled.Add, "Add new Item")
+                }
+            }
+        }
+    ) {
         NavigationGraph(navController = navController)
     }
 }
 
 @Composable
 fun NavigationGraph(navController: NavHostController) {
+
     NavHost(navController, startDestination = BottomNavItem.Items.route) {
+
         composable(BottomNavItem.Items.route) {
             ItemPage()
         }
         composable(BottomNavItem.Departments.route) {
             DepartmentPage()
         }
+        composable(Routes.createItem) {
+            CreateItemPage(navController)
+        }
     }
 }
 
 @Composable
-fun AppBottomNavigation(navController: NavController) {
+fun AppBottomNavigation(navController: NavController, fabIsVisible: MutableState<Boolean>) {
     val items = listOf(
         BottomNavItem.Items,
         BottomNavItem.Departments,
@@ -110,16 +142,7 @@ fun AppBottomNavigation(navController: NavController) {
                 alwaysShowLabel = true,
                 selected = currentRoute == item.route,
                 onClick = {
-                    navController.navigate(item.route) {
-
-                        navController.graph.startDestinationRoute?.let { screen_route ->
-                            popUpTo(screen_route) {
-                                saveState = true
-                            }
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
+                    navController.navigate(item.route)
                 }
             )
         }

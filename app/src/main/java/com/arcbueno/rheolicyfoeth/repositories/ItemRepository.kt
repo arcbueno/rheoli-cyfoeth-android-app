@@ -3,24 +3,17 @@ package com.arcbueno.rheolicyfoeth.repositories
 import com.arcbueno.rheolicyfoeth.models.Department
 import com.arcbueno.rheolicyfoeth.models.Item
 
-class ItemRepository {
-    val _itemList: MutableList<Item> = mutableListOf<Item>(
-        Item(
-            id = 1,
-            name = "Cadeira gamer",
-            description = "Financeiro fica querendo coisa estranha",
-            departmentId = 2
-        )
-    )
+object ItemRepository {
+    private val _itemList: MutableList<Item> = mutableListOf<Item>()
 
     fun getAll(): List<Item> {
         return _itemList
     }
 
 
-    fun getById(id: Int): Item? {
+    fun getById(id: String): Item? {
         if (_itemList.size > 0) {
-            return _itemList.filter { item: Item -> item.id == id }.first()
+            return _itemList.first { item: Item -> item.id == id }
         }
         return null
     }
