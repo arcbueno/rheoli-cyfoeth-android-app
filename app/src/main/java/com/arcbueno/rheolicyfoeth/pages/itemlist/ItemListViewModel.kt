@@ -15,7 +15,7 @@ class ItemListViewModel(
         return itemRepository.getAll();
     }
 
-    fun getDepartmentById(id: String): Department? {
+    fun getDepartmentById(id: Int): Department? {
         return departmentRepository.getById(id);
     }
 }

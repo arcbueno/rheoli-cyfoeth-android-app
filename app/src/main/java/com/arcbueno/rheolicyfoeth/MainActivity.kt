@@ -29,6 +29,10 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
+import com.arcbueno.rheolicyfoeth.data.AppDatabase
+import com.arcbueno.rheolicyfoeth.data.DepartmentDao
+import com.arcbueno.rheolicyfoeth.data.ItemDao
+import com.arcbueno.rheolicyfoeth.data.ItemMovingDao
 import com.arcbueno.rheolicyfoeth.pages.createitem.CreateItemPage
 import com.arcbueno.rheolicyfoeth.pages.departmentlist.DepartmentPage
 import com.arcbueno.rheolicyfoeth.pages.itemlist.ItemPage
@@ -42,21 +46,31 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 
-val appModule = module {
-    single { DepartmentRepository() }
-    single { ItemRepository() }
-    factory { CreateItemViewModel(get(), get()) }
-    factory { DepartmentListViewModel(get()) }
-    factory { ItemListViewModel(get(), get()) }
-
-}
 
 class MainActivity : ComponentActivity() {
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        val appModule = module {
+            single<ItemDao> { AppDatabase.getDatabase(this@MainActivity.baseContext).itemDao() }
+            single<DepartmentDao> {
+                AppDatabase.getDatabase(this@MainActivity.baseContext).departmentDao()
+            }
+            single<ItemMovingDao> {
+                AppDatabase.getDatabase(this@MainActivity.baseContext).itemMovingDao()
+            }
+            single { DepartmentRepository(get()) }
+            single { ItemRepository() }
+            factory { CreateItemViewModel(get(), get()) }
+            factory { DepartmentListViewModel(get()) }
+            factory { ItemListViewModel(get(), get()) }
+
+        }
         super.onCreate(savedInstanceState)
         startKoin {
             androidLogger()
             androidContext(this@MainActivity)
+
             modules(appModule)
         }
         setContent {

@@ -11,7 +11,7 @@ class ItemRepository {
     }
 
 
-    fun getById(id: String): Item? {
+    fun getById(id: Int): Item? {
         if (_itemList.size > 0) {
             return _itemList.first { item: Item -> item.id == id }
         }

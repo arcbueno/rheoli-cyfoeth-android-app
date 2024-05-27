@@ -7,6 +7,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -22,7 +24,8 @@ fun DepartmentPage(
     navHostController: NavHostController,
     departmentListViewModel: DepartmentListViewModel = koinInject()
 ) {
-    val departmentList = departmentListViewModel.getAll()
+    val state by departmentListViewModel.state.collectAsState()
+    departmentListViewModel.getAll()
     Column {
         Text(
             stringResource(id = R.string.all_departments),
@@ -30,7 +33,7 @@ fun DepartmentPage(
             fontSize = 24.sp
         )
         LazyColumn() {
-            items(departmentList) {
+            items(state.departmentList) {
                 Column(modifier = Modifier.padding(start = 12.dp, bottom = 12.dp)) {
                     Text(it.name)
                     if (it.description != null)

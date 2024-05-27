@@ -1,23 +1,44 @@
 package com.arcbueno.rheolicyfoeth.repositories
 
+import com.arcbueno.rheolicyfoeth.data.DepartmentDao
 import com.arcbueno.rheolicyfoeth.models.Department
+import kotlinx.coroutines.*
+import kotlin.system.*
 
-class DepartmentRepository {
-    private val _departmentList: List<Department> = mutableListOf(
-        Department(name = "Recepção"),
-        Department(name = "Financeiro", description = "Pagamentos e impostos"),
-        Department(name = "Copa", description = "Área para descanço e refeições"),
-    )
+class DepartmentRepository(val departmentDao: DepartmentDao) {
 
-    fun getAll(): List<Department> {
-        return _departmentList
+
+    init {
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val allDepartments = getAll()
+            if (allDepartments.isEmpty()) {
+                var depList = listOf(
+                    Department(name = "Recepção"),
+                    Department(name = "Financeiro", description = "Pagamentos e impostos"),
+                    Department(name = "Copa", description = "Área para descanço e refeições"),
+                )
+
+                for (dep in depList) {
+                    create(dep)
+
+                }
+            }
+        }
+
+
     }
 
-    fun getById(id: String): Department? {
-        if (_departmentList.size > 0) {
-            return _departmentList.filter { department: Department -> department.id == id }.first()
+    suspend fun create(department: Department) {
+        departmentDao.insert(department)
+    }
 
-        }
-        return null
+
+    fun getAll(): List<Department> {
+        return departmentDao.getAllDepartments()
+    }
+
+    fun getById(id: Int): Department? {
+        return departmentDao.getById(id)
     }
 }

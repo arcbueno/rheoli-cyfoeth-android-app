@@ -1,9 +1,13 @@
 package com.arcbueno.rheolicyfoeth.models
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.util.UUID
 
+@Entity(tableName = "departments")
 data class Department(
-    val id: String = UUID.randomUUID().toString(),
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
     val name: String,
     val description: String? = null
 )
