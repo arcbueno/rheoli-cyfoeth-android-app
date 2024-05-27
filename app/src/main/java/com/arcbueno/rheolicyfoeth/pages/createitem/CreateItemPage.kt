@@ -1,15 +1,13 @@
-package com.arcbueno.rheolicyfoeth.pages
+package com.arcbueno.rheolicyfoeth.pages.createitem
 
+import android.widget.StackView
 import android.widget.Toast
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.Button
-import androidx.compose.material.DropdownMenu
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ExposedDropdownMenuBox
@@ -17,23 +15,22 @@ import androidx.compose.material.ExposedDropdownMenuDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.arcbueno.rheolicyfoeth.R
 import com.arcbueno.rheolicyfoeth.components.CustomFormField
 import com.arcbueno.rheolicyfoeth.models.Department
 import com.arcbueno.rheolicyfoeth.models.Item
@@ -51,8 +48,11 @@ fun PagePreview() {
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun CreateItemPage(navHostController: NavHostController) {
-    val allDepartments = DepartmentRepository.getAll()
+fun CreateItemPage(
+    navHostController: NavHostController,
+    createItemViewModel: CreateItemViewModel = viewModel()
+) {
+    val state by createItemViewModel.state.collectAsState()
 
     var itemName by remember { mutableStateOf("") }
     var itemDescription by remember { mutableStateOf("") }
@@ -64,23 +64,28 @@ fun CreateItemPage(navHostController: NavHostController) {
 
     Column(modifier = Modifier.padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         val context = LocalContext.current
-        Text("Adicionar Item", fontSize = 24.sp, modifier = Modifier.padding(bottom = 18.dp))
+        Text(
+            stringResource(id = R.string.add_new_item),
+            fontSize = 24.sp,
+            modifier = Modifier.padding(bottom = 18.dp)
+        )
         CustomFormField(
             text = itemName,
             onValueChange = { itemName = it },
-            placeholder = { Text(text = "e.g. Mesa") },
-            label = { Text(text = "Item") },
-
-            )
+            placeholder = { Text(text = stringResource(id = R.string.item_name_textfield_placeholder)) },
+            label = { Text(text = stringResource(id = R.string.item)) },
+            trailingIcon = null,
+            readOnly = state.isLoading
+        )
         Spacer(modifier = Modifier.padding(8.dp))
         CustomFormField(
             text = itemDescription,
             onValueChange = { itemDescription = it },
-            placeholder = { Text(text = "e.g. 4 pernas") },
-            label = { Text(text = "Descrição") },
+            placeholder = { Text(text = stringResource(id = R.string.item_description_textfield_placeholder)) },
+            label = { Text(text = stringResource(id = R.string.description)) },
+            trailingIcon = null,
+            readOnly = state.isLoading
         )
-
-
         Spacer(modifier = Modifier.padding(8.dp))
         ExposedDropdownMenuBox(
             expanded = dropdownExpanded,
@@ -88,21 +93,21 @@ fun CreateItemPage(navHostController: NavHostController) {
                 dropdownExpanded = !dropdownExpanded
             }
         ) {
-            OutlinedTextField(
+            CustomFormField(
                 readOnly = true,
-                value = department?.name ?: "",
+                text = department?.name ?: "",
                 onValueChange = {},
-                label = { Text(text = "Department") },
+                placeholder = { Text(text = stringResource(id = R.string.department)) },
+                label = { Text(text = stringResource(id = R.string.department)) },
                 trailingIcon = {
                     ExposedDropdownMenuDefaults.TrailingIcon(expanded = dropdownExpanded)
-                },
-
-                )
+                }
+            )
 
             ExposedDropdownMenu(
-                expanded = dropdownExpanded,
+                expanded = !state.isLoading && dropdownExpanded,
                 onDismissRequest = { dropdownExpanded = false }) {
-                allDepartments.forEach { option: Department ->
+                state.departmentList.forEach { option: Department ->
                     DropdownMenuItem(
                         content = { Text(option.name) },
                         onClick = {
@@ -112,30 +117,39 @@ fun CreateItemPage(navHostController: NavHostController) {
                     )
                 }
             }
-
-
         }
-
         Spacer(modifier = Modifier.padding(24.dp))
         Button(onClick = {
-            if (department == null) {
+            val validationText = createItemViewModel.validate(itemName, department);
+            if (validationText != null) {
+
                 Toast.makeText(
                     context,
-                    "Necessário selecionar departamento",
+                    context.getString(validationText),
                     Toast.LENGTH_SHORT
                 ).show()
                 return@Button
             }
-            ItemRepository.create(
-                Item(
-                    name = itemName,
-                    description = itemDescription,
-                    departmentId = department!!.id,
-                ),
-            )
+            val success = createItemViewModel.createItem(itemName, itemDescription, department!!)
+
+            if (!success) {
+                Toast.makeText(
+                    context,
+                    R.string.create_item_general_error,
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@Button
+            }
             navHostController.popBackStack()
+
         }) {
-            Text("Save")
+            Text(stringResource(id = R.string.save))
         }
+
+        if (state.isLoading)
+            CircularProgressIndicator(
+                modifier = Modifier.width(64.dp),
+                color = MaterialTheme.colors.primary,
+            )
     }
 }

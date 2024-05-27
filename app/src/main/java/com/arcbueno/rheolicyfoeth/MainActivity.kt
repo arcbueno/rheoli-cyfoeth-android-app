@@ -2,14 +2,11 @@ package com.arcbueno.rheolicyfoeth
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -27,15 +24,12 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
-import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
-import com.arcbueno.rheolicyfoeth.pages.CreateItemPage
+import com.arcbueno.rheolicyfoeth.pages.createitem.CreateItemPage
 import com.arcbueno.rheolicyfoeth.pages.DepartmentPage
 import com.arcbueno.rheolicyfoeth.pages.ItemPage
 
@@ -89,7 +83,7 @@ fun MainPage(modifier: Modifier = Modifier) {
                         navController.navigate(Routes.createItem)
                     },
                 ) {
-                    Icon(Icons.Filled.Add, "Add new Item")
+                    Icon(Icons.Filled.Add, stringResource(id = R.string.add_new_item))
                 }
             }
         }

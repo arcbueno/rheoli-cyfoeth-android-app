@@ -10,8 +10,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.arcbueno.rheolicyfoeth.R
 import com.arcbueno.rheolicyfoeth.repositories.DepartmentRepository
 import com.arcbueno.rheolicyfoeth.repositories.ItemRepository
 
@@ -23,7 +25,11 @@ private val departmentRepository = DepartmentRepository
 fun ItemPage() {
     val itemList = itemRepository.getAll()
     Column {
-        Text("Todos os itens", modifier = Modifier.padding(12.dp), fontSize = 24.sp)
+        Text(
+            stringResource(id = R.string.all_items),
+            modifier = Modifier.padding(12.dp),
+            fontSize = 24.sp
+        )
         LazyColumn() {
             items(itemList) {
                 val department = departmentRepository.getById(it.departmentId)
@@ -38,7 +44,7 @@ fun ItemPage() {
                     if (department != null)
                         Row {
                             Text(
-                                text = "Department: ",
+                                text = "${stringResource(id = R.string.department)}: ",
                                 Modifier.padding(start = 12.dp)
                             )
                             Text(text = department.name)

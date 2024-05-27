@@ -16,8 +16,9 @@ fun CustomFormField(
     text: String,
     onValueChange: (String) -> Unit,
     placeholder: @Composable() (() -> Unit)?,
-    label: @Composable() (() -> Unit)?
-    
+    label: @Composable() (() -> Unit)?,
+    readOnly: Boolean = false,
+    trailingIcon: @Composable() (() -> Unit)?,
 ) {
     TextField(
         modifier = Modifier
@@ -33,10 +34,11 @@ fun CustomFormField(
             unfocusedIndicatorColor = Color.Transparent,
             backgroundColor = Color.Transparent,
         ),
-
+        readOnly = readOnly,
         value = text,
         onValueChange = onValueChange,
         placeholder = placeholder,
-        label = label
+        label = label,
+        trailingIcon = trailingIcon
     )
 }

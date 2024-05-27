@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Rheoli Cyfoeth</string>
+    <string name="add_new_item">Adicionar novo item</string>
+    <string name="all_items">Todos os itens</string>
+    <string name="item">Item</string>
+    <string name="department">Departamento</string>
+    <string name="all_departments">Todos os departamentos</string>
+    <string name="item_name_textfield_placeholder">e. g. Mesa</string>
+    <string name="item_description_textfield_placeholder">e.g. 4 pernas</string>
+    <string name="description">Descrição</string>
+    <string name="create_item_general_error">Houve um erro ao criar o item, tente novamente mais tarde</string>
+    <string name="save">Salvar</string>
+    <string name="item_name_is_required_error">O nome do item é obrigatório</string>
+    <string name="department_is_required_error">O departamento é obrigatório</string>
+
+
 </resources>
