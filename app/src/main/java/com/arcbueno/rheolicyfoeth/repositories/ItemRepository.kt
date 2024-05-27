@@ -3,7 +3,7 @@ package com.arcbueno.rheolicyfoeth.repositories
 import com.arcbueno.rheolicyfoeth.models.Department
 import com.arcbueno.rheolicyfoeth.models.Item
 
-object ItemRepository {
+class ItemRepository {
     private val _itemList: MutableList<Item> = mutableListOf<Item>()
 
     fun getAll(): List<Item> {

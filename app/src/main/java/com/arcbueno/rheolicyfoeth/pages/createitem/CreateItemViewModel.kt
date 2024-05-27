@@ -1,6 +1,5 @@
 package com.arcbueno.rheolicyfoeth.pages.createitem
 
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import com.arcbueno.rheolicyfoeth.R
 import com.arcbueno.rheolicyfoeth.models.Department
@@ -11,7 +10,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class CreateItemViewModel : ViewModel() {
+class CreateItemViewModel(
+    private val departmentRepository: DepartmentRepository,
+    private val itemRepository: ItemRepository
+) : ViewModel() {
     private val _uiState = MutableStateFlow(CreateItemState(isLoading = true))
     val state: StateFlow<CreateItemState>
         get() = _uiState.asStateFlow()
@@ -21,8 +23,8 @@ class CreateItemViewModel : ViewModel() {
         getDepartments()
     }
 
-    fun getDepartments() {
-        val allDepartments = DepartmentRepository.getAll()
+    private fun getDepartments() {
+        val allDepartments = departmentRepository.getAll()
         _uiState.value = CreateItemState(
             departmentList = allDepartments
         )
@@ -36,21 +38,21 @@ class CreateItemViewModel : ViewModel() {
             return R.string.department_is_required_error
         }
 
-        return null;
+        return null
     }
 
     fun createItem(itemName: String, itemDescription: String, department: Department): Boolean {
         return try {
-            ItemRepository.create(
+            itemRepository.create(
                 Item(
                     name = itemName,
                     description = itemDescription,
                     departmentId = department.id,
                 ),
             )
-            true;
+            true
         } catch (e: Exception) {
-            false;
+            false
         }
     }
 }

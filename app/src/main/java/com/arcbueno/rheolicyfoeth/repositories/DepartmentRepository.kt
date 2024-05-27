@@ -2,7 +2,7 @@ package com.arcbueno.rheolicyfoeth.repositories
 
 import com.arcbueno.rheolicyfoeth.models.Department
 
-object DepartmentRepository {
+class DepartmentRepository {
     private val _departmentList: List<Department> = mutableListOf(
         Department(name = "Recepção"),
         Department(name = "Financeiro", description = "Pagamentos e impostos"),

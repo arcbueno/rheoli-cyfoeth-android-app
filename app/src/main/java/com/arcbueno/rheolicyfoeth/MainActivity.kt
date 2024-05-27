@@ -30,13 +30,35 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
 import com.arcbueno.rheolicyfoeth.pages.createitem.CreateItemPage
-import com.arcbueno.rheolicyfoeth.pages.DepartmentPage
-import com.arcbueno.rheolicyfoeth.pages.ItemPage
+import com.arcbueno.rheolicyfoeth.pages.departmentlist.DepartmentPage
+import com.arcbueno.rheolicyfoeth.pages.itemlist.ItemPage
+import com.arcbueno.rheolicyfoeth.pages.createitem.CreateItemViewModel
+import com.arcbueno.rheolicyfoeth.pages.departmentlist.DepartmentListViewModel
+import com.arcbueno.rheolicyfoeth.pages.itemlist.ItemListViewModel
+import com.arcbueno.rheolicyfoeth.repositories.DepartmentRepository
+import com.arcbueno.rheolicyfoeth.repositories.ItemRepository
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
+import org.koin.dsl.module
 
+val appModule = module {
+    single { DepartmentRepository() }
+    single { ItemRepository() }
+    factory { CreateItemViewModel(get(), get()) }
+    factory { DepartmentListViewModel(get()) }
+    factory { ItemListViewModel(get(), get()) }
+
+}
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        startKoin {
+            androidLogger()
+            androidContext(this@MainActivity)
+            modules(appModule)
+        }
         setContent {
             RheoliCyfoethTheme {
                 // A surface container using the 'background' color from the theme
@@ -98,10 +120,10 @@ fun NavigationGraph(navController: NavHostController) {
     NavHost(navController, startDestination = BottomNavItem.Items.route) {
 
         composable(BottomNavItem.Items.route) {
-            ItemPage()
+            ItemPage(navController)
         }
         composable(BottomNavItem.Departments.route) {
-            DepartmentPage()
+            DepartmentPage(navController)
         }
         composable(Routes.createItem) {
             CreateItemPage(navController)

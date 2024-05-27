@@ -1,4 +1,4 @@
-package com.arcbueno.rheolicyfoeth.pages
+package com.arcbueno.rheolicyfoeth.pages.itemlist
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,17 +13,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.arcbueno.rheolicyfoeth.R
+import com.arcbueno.rheolicyfoeth.pages.departmentlist.DepartmentListViewModel
 import com.arcbueno.rheolicyfoeth.repositories.DepartmentRepository
 import com.arcbueno.rheolicyfoeth.repositories.ItemRepository
+import org.koin.compose.koinInject
 
-
-private val itemRepository = ItemRepository
-private val departmentRepository = DepartmentRepository
 
 @Composable
-fun ItemPage() {
-    val itemList = itemRepository.getAll()
+fun ItemPage(
+    navHostController: NavHostController,
+    itemListViewModel: ItemListViewModel = koinInject()
+) {
+    val itemList = itemListViewModel.getAllItems()
     Column {
         Text(
             stringResource(id = R.string.all_items),
@@ -32,7 +35,7 @@ fun ItemPage() {
         )
         LazyColumn() {
             items(itemList) {
-                val department = departmentRepository.getById(it.departmentId)
+                val department = itemListViewModel.getDepartmentById(it.departmentId)
                 Column(modifier = Modifier.padding(start = 12.dp, bottom = 12.dp)) {
                     Text(it.name, fontSize = 18.sp)
                     if (it.description != null)

@@ -37,6 +37,7 @@ import com.arcbueno.rheolicyfoeth.models.Item
 import com.arcbueno.rheolicyfoeth.repositories.DepartmentRepository
 import com.arcbueno.rheolicyfoeth.repositories.ItemRepository
 import com.arcbueno.rheolicyfoeth.ui.theme.RheoliCyfoethTheme
+import org.koin.compose.koinInject
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
@@ -50,7 +51,7 @@ fun PagePreview() {
 @Composable
 fun CreateItemPage(
     navHostController: NavHostController,
-    createItemViewModel: CreateItemViewModel = viewModel()
+    createItemViewModel: CreateItemViewModel = koinInject()
 ) {
     val state by createItemViewModel.state.collectAsState()
 

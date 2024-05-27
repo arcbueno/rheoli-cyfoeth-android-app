@@ -1,4 +1,4 @@
-package com.arcbueno.rheolicyfoeth.pages
+package com.arcbueno.rheolicyfoeth.pages.departmentlist
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -11,15 +11,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.arcbueno.rheolicyfoeth.R
-import com.arcbueno.rheolicyfoeth.repositories.DepartmentRepository
+import com.arcbueno.rheolicyfoeth.pages.createitem.CreateItemViewModel
+import org.koin.compose.koinInject
 
-
-private val departmentRepository: DepartmentRepository = DepartmentRepository
 
 @Composable
-fun DepartmentPage() {
-    val departmentList = departmentRepository.getAll()
+fun DepartmentPage(
+    navHostController: NavHostController,
+    departmentListViewModel: DepartmentListViewModel = koinInject()
+) {
+    val departmentList = departmentListViewModel.getAll()
     Column {
         Text(
             stringResource(id = R.string.all_departments),
