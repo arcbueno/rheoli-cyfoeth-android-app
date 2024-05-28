@@ -3,13 +3,11 @@ package com.arcbueno.rheolicyfoeth.repositories
 import com.arcbueno.rheolicyfoeth.data.DepartmentDao
 import com.arcbueno.rheolicyfoeth.models.Department
 import kotlinx.coroutines.*
-import kotlin.system.*
 
 class DepartmentRepository(val departmentDao: DepartmentDao) {
 
 
     init {
-
         CoroutineScope(Dispatchers.IO).launch {
             val allDepartments = getAll()
             if (allDepartments.isEmpty()) {
@@ -21,7 +19,6 @@ class DepartmentRepository(val departmentDao: DepartmentDao) {
 
                 for (dep in depList) {
                     create(dep)
-
                 }
             }
         }
@@ -32,7 +29,6 @@ class DepartmentRepository(val departmentDao: DepartmentDao) {
     suspend fun create(department: Department) {
         departmentDao.insert(department)
     }
-
 
     fun getAll(): List<Department> {
         return departmentDao.getAllDepartments()
