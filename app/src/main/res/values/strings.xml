@@ -12,6 +12,9 @@
     <string name="save">Salvar</string>
     <string name="item_name_is_required_error">O nome do item é obrigatório</string>
     <string name="department_is_required_error">O departamento é obrigatório</string>
+    <string name="inventory">Inventário</string>
+    <string name="total_items">Total de itens</string>
+    <string name="total_departments">Total de departamentos</string>
 
 
 </resources>

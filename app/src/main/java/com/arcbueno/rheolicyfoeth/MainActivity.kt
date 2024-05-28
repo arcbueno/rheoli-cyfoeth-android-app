@@ -8,6 +8,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,8 +28,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
+import com.arcbueno.rheolicyfoeth.components.CustomAppBar
 import com.arcbueno.rheolicyfoeth.data.AppDatabase
 import com.arcbueno.rheolicyfoeth.data.DepartmentDao
 import com.arcbueno.rheolicyfoeth.data.ItemDao
@@ -38,6 +41,8 @@ import com.arcbueno.rheolicyfoeth.pages.departmentlist.DepartmentPage
 import com.arcbueno.rheolicyfoeth.pages.itemlist.ItemPage
 import com.arcbueno.rheolicyfoeth.pages.createitem.CreateItemViewModel
 import com.arcbueno.rheolicyfoeth.pages.departmentlist.DepartmentListViewModel
+import com.arcbueno.rheolicyfoeth.pages.home.HomePage
+import com.arcbueno.rheolicyfoeth.pages.home.HomeViewModel
 import com.arcbueno.rheolicyfoeth.pages.itemlist.ItemListViewModel
 import com.arcbueno.rheolicyfoeth.repositories.DepartmentRepository
 import com.arcbueno.rheolicyfoeth.repositories.ItemRepository
@@ -51,28 +56,9 @@ class MainActivity : ComponentActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val appModule = module {
-            single<ItemDao> { AppDatabase.getDatabase(this@MainActivity.baseContext).itemDao() }
-            single<DepartmentDao> {
-                AppDatabase.getDatabase(this@MainActivity.baseContext).departmentDao()
-            }
-            single<ItemMovingDao> {
-                AppDatabase.getDatabase(this@MainActivity.baseContext).itemMovingDao()
-            }
-            single { DepartmentRepository(get()) }
-            single { ItemRepository() }
-            factory { CreateItemViewModel(get(), get()) }
-            factory { DepartmentListViewModel(get()) }
-            factory { ItemListViewModel(get(), get()) }
 
-        }
         super.onCreate(savedInstanceState)
-        startKoin {
-            androidLogger()
-            androidContext(this@MainActivity)
-
-            modules(appModule)
-        }
+        Config.startConfig(this@MainActivity.baseContext)
         setContent {
             RheoliCyfoethTheme {
                 // A surface container using the 'background' color from the theme
@@ -100,14 +86,17 @@ fun AppPreview() {
 fun MainPage(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
     val fabIsVisible = rememberSaveable { mutableStateOf(true) }
+    val currentRoute = rememberSaveable { mutableStateOf<String?>(null) }
     navController.let {
-        val navBackStackEntry by it.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry?.destination?.route
-        fabIsVisible.value = currentRoute == BottomNavItem.Items.route
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val route = navBackStackEntry?.destination?.route
+        fabIsVisible.value =
+            route == BottomNavItem.Items.route || route == BottomNavItem.Departments.route
+        currentRoute.value = route
     }
 
     Scaffold(
-        bottomBar = { AppBottomNavigation(navController = navController, fabIsVisible) },
+        bottomBar = { AppBottomNavigation(navController = navController) },
         floatingActionButton = {
             AnimatedVisibility(
                 visible = fabIsVisible.value,
@@ -116,12 +105,21 @@ fun MainPage(modifier: Modifier = Modifier) {
             ) {
                 FloatingActionButton(
                     onClick = {
-                        navController.navigate(Routes.createItem)
+                        when (currentRoute.value) {
+                            BottomNavItem.Items.route -> {
+                                navController.navigate(Routes.createItem)
+                            }
+
+                            else -> {}
+                        }
+
                     },
                 ) {
                     Icon(Icons.Filled.Add, stringResource(id = R.string.add_new_item))
                 }
             }
+        }, modifier = Modifier.padding(horizontal = 12.dp), topBar = {
+            CustomAppBar(title = stringResource(id = R.string.inventory))
         }
     ) {
         NavigationGraph(navController = navController)
@@ -131,12 +129,17 @@ fun MainPage(modifier: Modifier = Modifier) {
 @Composable
 fun NavigationGraph(navController: NavHostController) {
 
-    NavHost(navController, startDestination = BottomNavItem.Items.route) {
-
+    NavHost(navController, startDestination = BottomNavItem.Home.route) {
+        composable(BottomNavItem.Home.route) {
+            HomePage(navController)
+        }
         composable(BottomNavItem.Items.route) {
             ItemPage(navController)
         }
         composable(BottomNavItem.Departments.route) {
+            DepartmentPage(navController)
+        }
+        composable(BottomNavItem.Settings.route) {
             DepartmentPage(navController)
         }
         composable(Routes.createItem) {
@@ -146,14 +149,17 @@ fun NavigationGraph(navController: NavHostController) {
 }
 
 @Composable
-fun AppBottomNavigation(navController: NavController, fabIsVisible: MutableState<Boolean>) {
+fun AppBottomNavigation(navController: NavController) {
     val items = listOf(
+        BottomNavItem.Home,
         BottomNavItem.Items,
         BottomNavItem.Departments,
+        BottomNavItem.Settings,
     )
     BottomNavigation(
-        backgroundColor = colorResource(id = R.color.teal_200),
-        contentColor = Color.Black
+        backgroundColor = Color.White,
+        contentColor = Color.Black,
+        elevation = 20.dp
     ) {
 
         val navBackStackEntry by navController.currentBackStackEntryAsState()

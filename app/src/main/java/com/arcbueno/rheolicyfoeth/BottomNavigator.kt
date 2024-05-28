@@ -13,5 +13,5 @@ sealed class BottomNavItem(val route: String, val icon: ImageVector, val label: 
     object Home : BottomNavItem("home", Icons.Default.Home, "Home")
     object Items : BottomNavItem("items", Icons.Default.Menu, "Items")
     object Departments : BottomNavItem("departments", Icons.Default.LocationOn, "Departments")
-    object Profile : BottomNavItem("settings", Icons.Default.Settings, "settings")
+    object Settings : BottomNavItem("settings", Icons.Default.Settings, "settings")
 }
