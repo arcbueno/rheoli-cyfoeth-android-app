@@ -21,19 +21,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.arcbueno.rheolicyfoeth.R
 import com.arcbueno.rheolicyfoeth.models.Department
 import com.arcbueno.rheolicyfoeth.models.Item
 
 @Composable
-fun ItemListItem(modifier: Modifier = Modifier, item: Item) {
+fun ItemListItem(modifier: Modifier = Modifier, item: Item, department: Department?) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .padding(4.dp)
             .border(width = 2.dp, color = Color.LightGray, RoundedCornerShape(12.dp))
-            .heightIn(min = 64.dp)
+            .heightIn(min = 82.dp)
             .clickable {
                 // TODO: Go to ItemDetails
                 Log.v("App", "clicked ${item.name}")
@@ -48,8 +50,10 @@ fun ItemListItem(modifier: Modifier = Modifier, item: Item) {
         ) {
             Column {
                 Text(item.name, fontSize = 24.sp)
-                if (item.description != null)
+                if (!item.description.isNullOrEmpty())
                     Text(item.description, color = Color.DarkGray)
+                if (department != null)
+                    Text(text = department.name)
             }
             Spacer(modifier = Modifier.weight(1f))
             Column(

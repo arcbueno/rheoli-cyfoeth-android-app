@@ -76,4 +76,5 @@ dependencies {
     implementation("androidx.room:room-ktx:2.6.1")
     implementation("io.insert-koin:koin-androidx-compose:3.5.6")
     testImplementation("io.insert-koin:koin-test-junit4:3.5.6")
+    implementation("androidx.compose.material:material-icons-extended")
 }

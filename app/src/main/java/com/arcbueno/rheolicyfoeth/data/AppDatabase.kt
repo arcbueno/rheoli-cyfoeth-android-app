@@ -8,10 +8,11 @@ import androidx.room.TypeConverters
 import com.arcbueno.rheolicyfoeth.models.Department
 import com.arcbueno.rheolicyfoeth.models.Item
 import com.arcbueno.rheolicyfoeth.models.ItemMoving
+import com.arcbueno.rheolicyfoeth.models.Key
 import com.arcbueno.rheolicyfoeth.utils.Converters
 
 @Database(
-    entities = [Item::class, Department::class, ItemMoving::class],
+    entities = [Item::class, Department::class, ItemMoving::class, Key::class],
     version = 1,
     exportSchema = false
 )
@@ -20,6 +21,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun itemDao(): ItemDao
     abstract fun departmentDao(): DepartmentDao
     abstract fun itemMovingDao(): ItemMovingDao
+    abstract fun keyDao(): KeyDao
 
     companion object {
         @Volatile

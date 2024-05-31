@@ -15,6 +15,14 @@
     <string name="inventory">Inventário</string>
     <string name="total_items">Total de itens</string>
     <string name="total_departments">Total de departamentos</string>
+    <string name="is_hidden">Item escondido</string>
+    <string name="item_quantity">Quantidade</string>
+    <string name="quantity_is_required_error">A quantidade do item é obrigatória</string>
+    <string name="hidden_item_password_input_title">Digite a senha</string>
+    <string name="password">Senha</string>
+    <string name="wrong_password">Senha incorreta</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancelar</string>
 
 
 </resources>

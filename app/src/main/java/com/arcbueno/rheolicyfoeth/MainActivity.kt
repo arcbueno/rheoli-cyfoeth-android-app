@@ -53,8 +53,6 @@ import org.koin.dsl.module
 
 
 class MainActivity : ComponentActivity() {
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -85,40 +83,14 @@ fun AppPreview() {
 @Composable
 fun MainPage(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
-    val fabIsVisible = rememberSaveable { mutableStateOf(true) }
-    val currentRoute = rememberSaveable { mutableStateOf<String?>(null) }
     navController.let {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val route = navBackStackEntry?.destination?.route
-        fabIsVisible.value =
-            route == BottomNavItem.Items.route || route == BottomNavItem.Departments.route
-        currentRoute.value = route
     }
 
     Scaffold(
         bottomBar = { AppBottomNavigation(navController = navController) },
-        floatingActionButton = {
-            AnimatedVisibility(
-                visible = fabIsVisible.value,
-                enter = slideInHorizontally(initialOffsetX = { it * 2 }),
-                exit = slideOutHorizontally(targetOffsetX = { it * 2 }),
-            ) {
-                FloatingActionButton(
-                    onClick = {
-                        when (currentRoute.value) {
-                            BottomNavItem.Items.route -> {
-                                navController.navigate(Routes.createItem)
-                            }
-
-                            else -> {}
-                        }
-
-                    },
-                ) {
-                    Icon(Icons.Filled.Add, stringResource(id = R.string.add_new_item))
-                }
-            }
-        }, modifier = Modifier.padding(horizontal = 12.dp), topBar = {
+        modifier = Modifier.padding(horizontal = 12.dp), topBar = {
             CustomAppBar(title = stringResource(id = R.string.inventory))
         }
     ) {

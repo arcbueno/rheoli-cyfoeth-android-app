@@ -1,39 +1,30 @@
 package com.arcbueno.rheolicyfoeth.repositories
 
+import com.arcbueno.rheolicyfoeth.data.DepartmentDao
+import com.arcbueno.rheolicyfoeth.data.ItemDao
 import com.arcbueno.rheolicyfoeth.models.Department
 import com.arcbueno.rheolicyfoeth.models.Item
 
-class ItemRepository {
-    private val _itemList: MutableList<Item> = mutableListOf<Item>()
+class ItemRepository(val itemDao: ItemDao) {
+
+    suspend fun create(department: Item) {
+        itemDao.insert(department)
+    }
+
+    suspend fun update(item: Item) {
+        return itemDao.update(item)
+    }
+
+    suspend fun delete(item: Item) {
+        return itemDao.delete(item)
+    }
 
     fun getAll(): List<Item> {
-        return _itemList
+        return itemDao.getAllItems()
     }
 
-
-    fun getById(id: Int): Item? {
-        if (_itemList.size > 0) {
-            return _itemList.first { item: Item -> item.id == id }
-        }
-        return null
-    }
-
-    fun create(item: Item): Unit {
-        _itemList.add(item)
-    }
-
-    fun update(item: Item): Boolean {
-        if (_itemList.any { it.id == item.id }) {
-            val old = _itemList.filter { it.id == item.id }.first()
-            val index = _itemList.indexOf(old)
-            _itemList.set(index, item)
-            return true
-        }
-        return false
-    }
-
-    fun delete(item: Item): Unit {
-        _itemList.remove(item)
+    fun getById(id: Int): Item {
+        return itemDao.getById(id)
     }
 
 }
