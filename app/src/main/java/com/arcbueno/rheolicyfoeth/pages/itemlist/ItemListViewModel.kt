@@ -68,7 +68,7 @@ class ItemListViewModel(
         }
     }
 
-    fun hiddeItens() {
+    fun hideItens() {
         _uiState.value = _uiState.value.copy(showAll = false)
         getAllItems(false)
     }

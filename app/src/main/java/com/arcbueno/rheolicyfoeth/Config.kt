@@ -9,8 +9,10 @@ import com.arcbueno.rheolicyfoeth.data.KeyDao
 import com.arcbueno.rheolicyfoeth.pages.createitem.CreateItemViewModel
 import com.arcbueno.rheolicyfoeth.pages.departmentlist.DepartmentListViewModel
 import com.arcbueno.rheolicyfoeth.pages.home.HomeViewModel
+import com.arcbueno.rheolicyfoeth.pages.itemdetail.ItemDetailViewModel
 import com.arcbueno.rheolicyfoeth.pages.itemlist.ItemListViewModel
 import com.arcbueno.rheolicyfoeth.repositories.DepartmentRepository
+import com.arcbueno.rheolicyfoeth.repositories.ItemMovingRepository
 import com.arcbueno.rheolicyfoeth.repositories.ItemRepository
 import com.arcbueno.rheolicyfoeth.repositories.KeyRepository
 import org.koin.android.ext.koin.androidContext
@@ -36,12 +38,14 @@ object Config {
             single { DepartmentRepository(get()) }
             single { ItemRepository(get()) }
             single { KeyRepository(get()) }
+            single { ItemMovingRepository(get()) }
 
             // Viewmodels
             factory { HomeViewModel(get(), get()) }
             factory { CreateItemViewModel(get(), get()) }
             factory { DepartmentListViewModel(get()) }
             factory { ItemListViewModel(get(), get(), get()) }
+            factory { ItemDetailViewModel(get(), get(), get()) }
 
         }
         startKoin {

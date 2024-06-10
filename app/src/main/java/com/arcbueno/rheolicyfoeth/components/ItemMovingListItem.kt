@@ -26,24 +26,24 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.arcbueno.rheolicyfoeth.R
 import com.arcbueno.rheolicyfoeth.models.Department
-import com.arcbueno.rheolicyfoeth.models.Item
+import com.arcbueno.rheolicyfoeth.models.ItemMoving
+import java.time.format.DateTimeFormatter
+
 
 @Composable
-fun ItemListItem(
+fun ItemMovingListItem(
     modifier: Modifier = Modifier,
-    item: Item,
-    department: Department?,
-    onTap: () -> Unit
+    itemMoving: ItemMoving,
+    initialDepartment: Department,
+    destinationDepartment: Department
 ) {
+    val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .padding(4.dp)
             .border(width = 2.dp, color = Color.LightGray, RoundedCornerShape(12.dp))
-            .heightIn(min = 82.dp)
-            .clickable(
-                onClick = onTap
-            ),
+            .heightIn(min = 64.dp),
     ) {
         Row(
             modifier = Modifier
@@ -52,26 +52,26 @@ fun ItemListItem(
                 .padding(8.dp)
                 .align(Alignment.Center)
         ) {
+            Column(modifier = Modifier.padding(top = 8.dp)) {
+                Text(stringResource(id = R.string.initial_department), fontSize = 18.sp)
+                Text(initialDepartment.name, color = Color.DarkGray, fontSize = 24.sp)
+                Text(
+                    formatter.format((itemMoving.startDate ?: itemMoving.finishDate)),
+                    color = Color.DarkGray,
+                    fontSize = 18.sp
+                )
+            }
+            Spacer(modifier = Modifier.padding(12.dp))
             Column {
-                Text(item.name, fontSize = 24.sp)
-                if (!item.description.isNullOrEmpty())
-                    Text(item.description, color = Color.DarkGray)
-                if (department != null)
-                    Text(text = department.name)
+                Text(stringResource(id = R.string.destination), fontSize = 18.sp)
+                Text(destinationDepartment.name, color = Color.DarkGray, fontSize = 24.sp)
+                Text(
+                    formatter.format(itemMoving.finishDate),
+                    color = Color.DarkGray,
+                    fontSize = 18.sp
+                )
             }
-            Spacer(modifier = Modifier.weight(1f))
-            Column(
-                modifier = Modifier
-                    .align(
-                        Alignment.CenterVertically
-                    )
-            ) {
-                Icon(
-                    Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                    "open",
 
-                    )
-            }
         }
     }
 }

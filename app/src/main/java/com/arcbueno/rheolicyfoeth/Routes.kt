@@ -1,5 +1,6 @@
 package com.arcbueno.rheolicyfoeth
 
 object Routes {
-    val createItem: String = "CreateItem"
+    const val createItem: String = "CreateItem"
+    const val itemDetails: String = "ItemDetails"
 }

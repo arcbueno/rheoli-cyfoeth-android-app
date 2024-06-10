@@ -12,5 +12,5 @@ data class ItemMoving(
     val finishDate: LocalDateTime,
     val initialDepartmentId: Int,
     val destinationDepartmentId: Int,
-    val itemId: String,
+    val itemId: Int,
 );

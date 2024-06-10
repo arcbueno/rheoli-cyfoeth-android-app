@@ -30,7 +30,9 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
+import androidx.navigation.navArgument
 import com.arcbueno.rheolicyfoeth.components.CustomAppBar
 import com.arcbueno.rheolicyfoeth.data.AppDatabase
 import com.arcbueno.rheolicyfoeth.data.DepartmentDao
@@ -43,6 +45,7 @@ import com.arcbueno.rheolicyfoeth.pages.createitem.CreateItemViewModel
 import com.arcbueno.rheolicyfoeth.pages.departmentlist.DepartmentListViewModel
 import com.arcbueno.rheolicyfoeth.pages.home.HomePage
 import com.arcbueno.rheolicyfoeth.pages.home.HomeViewModel
+import com.arcbueno.rheolicyfoeth.pages.itemdetail.ItemDetailPage
 import com.arcbueno.rheolicyfoeth.pages.itemlist.ItemListViewModel
 import com.arcbueno.rheolicyfoeth.repositories.DepartmentRepository
 import com.arcbueno.rheolicyfoeth.repositories.ItemRepository
@@ -116,6 +119,13 @@ fun NavigationGraph(navController: NavHostController) {
         }
         composable(Routes.createItem) {
             CreateItemPage(navController)
+        }
+        composable(
+            "${Routes.itemDetails}/{id}",
+            arguments = listOf(navArgument("id") { type = NavType.IntType })
+        ) {
+            val id = it.arguments?.getInt("id") ?: 0
+            ItemDetailPage(navController, id)
         }
     }
 }

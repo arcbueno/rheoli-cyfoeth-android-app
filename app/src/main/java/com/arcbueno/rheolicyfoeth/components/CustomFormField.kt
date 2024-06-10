@@ -41,6 +41,7 @@ fun AppPreview() {
 
 @Composable
 fun CustomFormField(
+    modifier: Modifier = Modifier,
     text: String,
     onValueChange: (String) -> Unit,
     placeholder: @Composable() (() -> Unit)? = null,
@@ -50,7 +51,7 @@ fun CustomFormField(
     minHeight: Dp? = null,
     error: String? = null,
 ) {
-    Column {
+    Column(modifier = modifier) {
         TextField(
 
             modifier = Modifier
@@ -79,7 +80,9 @@ fun CustomFormField(
         )
         if (error != null) {
             Text(
-                modifier = Modifier.padding(start= 12.dp).fillMaxWidth(),
+                modifier = Modifier
+                    .padding(start = 12.dp)
+                    .fillMaxWidth(),
                 text = error,
                 color = MaterialTheme.colors.error
             )

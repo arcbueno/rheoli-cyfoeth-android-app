@@ -23,6 +23,15 @@
     <string name="wrong_password">Senha incorreta</string>
     <string name="ok">Ok</string>
     <string name="cancel">Cancelar</string>
+    <string name="item_movings">Transferencias</string>
+    <string name="initial_department">Departamento inicial</string>
+    <string name="destination">Destino</string>
+    <string name="no_movings_found">Nenhuma transferência encontrada</string>
+    <string name="transfer">Mover\n</string>
+    <string name="start_date">Data inicial</string>
+    <string name="empty">Não selecionado</string>
+    <string name="finish_date">Data final</string>
+    <string name="fields_not_filled">Existem campos não preenchidos</string>
 
 
 </resources>
