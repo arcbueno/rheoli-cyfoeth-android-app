@@ -49,6 +49,7 @@ import com.arcbueno.rheolicyfoeth.pages.home.HomePage
 import com.arcbueno.rheolicyfoeth.pages.home.HomeViewModel
 import com.arcbueno.rheolicyfoeth.pages.itemdetail.ItemDetailPage
 import com.arcbueno.rheolicyfoeth.pages.itemlist.ItemListViewModel
+import com.arcbueno.rheolicyfoeth.pages.settings.SettingsPage
 import com.arcbueno.rheolicyfoeth.repositories.DepartmentRepository
 import com.arcbueno.rheolicyfoeth.repositories.ItemRepository
 import org.koin.android.ext.koin.androidContext
@@ -117,7 +118,7 @@ fun NavigationGraph(navController: NavHostController) {
             DepartmentPage(navController)
         }
         composable(BottomNavItem.Settings.route) {
-            DepartmentPage(navController)
+            SettingsPage(navController)
         }
         composable(Routes.createItem) {
             CreateItemPage(navController)

@@ -38,6 +38,12 @@
     <string name="department_name_is_required_error">O nome do departamento é obrigatório</string>
     <string name="empty_department">Departamento vazio</string>
     <string name="no_description">Sem descrição</string>
+    <string name="current_key">Chave atual</string>
+    <string name="new_key">Nova chave</string>
+    <string name="digit_the_new_key_again">Digite a nova chave novamente</string>
+    <string name="wrong_key">Chave incorreta</string>
+    <string name="new_keys_incorrect">Chaves estão diferentes</string>
+    <string name="change_key">Trocar a senha</string>
 
 
 </resources>

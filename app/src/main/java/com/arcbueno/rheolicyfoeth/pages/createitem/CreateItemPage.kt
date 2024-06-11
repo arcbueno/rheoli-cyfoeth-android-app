@@ -52,7 +52,8 @@ import org.koin.compose.koinInject
 @Composable
 fun CreateItemPage(
     navHostController: NavHostController,
-    createItemViewModel: CreateItemViewModel = koinInject(), itemId: Int? = null
+    createItemViewModel: CreateItemViewModel = CreateItemViewModel(koinInject(), koinInject()),
+    itemId: Int? = null
 ) {
     val state by createItemViewModel.state.collectAsState()
 

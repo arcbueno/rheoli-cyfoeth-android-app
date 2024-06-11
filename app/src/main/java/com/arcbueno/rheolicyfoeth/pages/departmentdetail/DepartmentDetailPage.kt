@@ -53,7 +53,11 @@ import org.koin.compose.koinInject
 @Composable
 fun DepartmentDetailPage(
     navHostController: NavHostController, departmentId: Int,
-    viewModel: DepartmentDetailViewModel = koinInject(),
+    viewModel: DepartmentDetailViewModel = DepartmentDetailViewModel(
+        koinInject(),
+        koinInject(),
+        koinInject()
+    ),
 
     ) {
     val state by viewModel.state.collectAsState()

@@ -43,7 +43,11 @@ import org.koin.compose.koinInject
 @Composable
 fun ItemPage(
     navHostController: NavHostController,
-    itemListViewModel: ItemListViewModel = koinInject()
+    itemListViewModel: ItemListViewModel = ItemListViewModel(
+        koinInject(),
+        koinInject(),
+        koinInject()
+    )
 ) {
     val state by itemListViewModel.state.collectAsState()
     val showDialog = remember { mutableStateOf(false) }
@@ -83,6 +87,7 @@ fun ItemPage(
                                 val result = itemListViewModel.showAll(passwordString.value)
                                 if (result) {
                                     showDialog.value = false
+                                    passwordString.value = ""
                                     return@TextButton
                                 }
                                 passwordError.value = R.string.wrong_password

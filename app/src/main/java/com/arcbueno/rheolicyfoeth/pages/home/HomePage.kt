@@ -70,7 +70,7 @@ fun PagePreview() {
 @Composable
 fun HomePage(
     navHostController: NavHostController,
-    homeViewModel: HomeViewModel = koinInject()
+    homeViewModel: HomeViewModel = HomeViewModel(koinInject(), koinInject())
 ) {
     val state by homeViewModel.state.collectAsState()
     Column {

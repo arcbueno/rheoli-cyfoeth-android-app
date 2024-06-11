@@ -13,6 +13,7 @@ import com.arcbueno.rheolicyfoeth.pages.departmentlist.DepartmentListViewModel
 import com.arcbueno.rheolicyfoeth.pages.home.HomeViewModel
 import com.arcbueno.rheolicyfoeth.pages.itemdetail.ItemDetailViewModel
 import com.arcbueno.rheolicyfoeth.pages.itemlist.ItemListViewModel
+import com.arcbueno.rheolicyfoeth.pages.settings.SettingsViewModel
 import com.arcbueno.rheolicyfoeth.repositories.DepartmentRepository
 import com.arcbueno.rheolicyfoeth.repositories.ItemMovingRepository
 import com.arcbueno.rheolicyfoeth.repositories.ItemRepository
@@ -41,15 +42,6 @@ object Config {
             single { ItemRepository(get()) }
             single { KeyRepository(get()) }
             single { ItemMovingRepository(get()) }
-
-            // Viewmodels
-            factory { HomeViewModel(get(), get()) }
-            factory { CreateItemViewModel(get(), get()) }
-            factory { DepartmentListViewModel(get()) }
-            factory { ItemListViewModel(get(), get(), get()) }
-            factory { ItemDetailViewModel(get(), get(), get()) }
-            factory { CreateDepartmentViewModel(get()) }
-            factory { DepartmentDetailViewModel(get(), get(), get()) }
 
         }
         startKoin {

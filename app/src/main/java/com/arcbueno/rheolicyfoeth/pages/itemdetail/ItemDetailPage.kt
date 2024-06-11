@@ -75,7 +75,7 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun ItemDetailPage(
     navHostController: NavHostController, itemId: Int,
-    viewModel: ItemDetailViewModel = koinInject(),
+    viewModel: ItemDetailViewModel = ItemDetailViewModel(koinInject(), koinInject(), koinInject())
 ) {
     val state by viewModel.state.collectAsState()
     var showBottomSheet by remember { mutableStateOf(false) }
