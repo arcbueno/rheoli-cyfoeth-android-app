@@ -36,6 +36,8 @@
     <string name="department_name_textfield_placeholder">e.g. Recepção</string>
     <string name="department_description_textfield_placeholder">e.g. Área para lazer</string>
     <string name="department_name_is_required_error">O nome do departamento é obrigatório</string>
+    <string name="empty_department">Departamento vazio</string>
+    <string name="no_description">Sem descrição</string>
 
 
 </resources>

@@ -64,7 +64,11 @@ fun DepartmentPage(
             )
             LazyColumn() {
                 items(state.departmentList) {
-                    DepartmentListItem(department = it, onTap = {})
+                    DepartmentListItem(department = it, onTap = {
+                        navHostController.navigate(
+                            "${Routes.departmentDetails}/${it.id}",
+                        )
+                    })
                 }
             }
         }

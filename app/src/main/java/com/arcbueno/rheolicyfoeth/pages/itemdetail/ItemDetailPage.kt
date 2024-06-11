@@ -153,7 +153,10 @@ fun ItemDetailPage(
                         .heightIn(min = 96.dp)
                         .fillMaxWidth()
                 ) {
-                    Text(state.item?.description ?: "", modifier = Modifier.padding(12.dp))
+                    Text(
+                        state.item?.description ?: stringResource(id = R.string.no_description),
+                        modifier = Modifier.padding(12.dp)
+                    )
                 }
                 Text(
                     text = stringResource(id = R.string.item_movings),

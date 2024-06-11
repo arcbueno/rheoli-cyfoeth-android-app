@@ -8,6 +8,7 @@ import com.arcbueno.rheolicyfoeth.data.ItemMovingDao
 import com.arcbueno.rheolicyfoeth.data.KeyDao
 import com.arcbueno.rheolicyfoeth.pages.createdepartment.CreateDepartmentViewModel
 import com.arcbueno.rheolicyfoeth.pages.createitem.CreateItemViewModel
+import com.arcbueno.rheolicyfoeth.pages.departmentdetail.DepartmentDetailViewModel
 import com.arcbueno.rheolicyfoeth.pages.departmentlist.DepartmentListViewModel
 import com.arcbueno.rheolicyfoeth.pages.home.HomeViewModel
 import com.arcbueno.rheolicyfoeth.pages.itemdetail.ItemDetailViewModel
@@ -48,6 +49,7 @@ object Config {
             factory { ItemListViewModel(get(), get(), get()) }
             factory { ItemDetailViewModel(get(), get(), get()) }
             factory { CreateDepartmentViewModel(get()) }
+            factory { DepartmentDetailViewModel(get(), get()) }
 
         }
         startKoin {

@@ -25,4 +25,7 @@ interface ItemDao {
 
     @Query("SELECT * from items WHERE id = :id")
     fun getById(id: Int): Item
+
+    @Query("SELECT * FROM items WHERE departmentId = :departmentId")
+    fun getAllByDepartmentId(departmentId: Int): List<Item>
 }

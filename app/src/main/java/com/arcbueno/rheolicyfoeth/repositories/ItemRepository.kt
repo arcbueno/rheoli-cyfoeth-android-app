@@ -27,4 +27,8 @@ class ItemRepository(val itemDao: ItemDao) {
         return itemDao.getById(id)
     }
 
+    fun getAllByDepartmentId(departmentId: Int): List<Item> {
+        return itemDao.getAllByDepartmentId(departmentId);
+    }
+
 }

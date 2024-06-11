@@ -43,6 +43,7 @@ import com.arcbueno.rheolicyfoeth.pages.createitem.CreateItemPage
 import com.arcbueno.rheolicyfoeth.pages.departmentlist.DepartmentPage
 import com.arcbueno.rheolicyfoeth.pages.itemlist.ItemPage
 import com.arcbueno.rheolicyfoeth.pages.createitem.CreateItemViewModel
+import com.arcbueno.rheolicyfoeth.pages.departmentdetail.DepartmentDetailPage
 import com.arcbueno.rheolicyfoeth.pages.departmentlist.DepartmentListViewModel
 import com.arcbueno.rheolicyfoeth.pages.home.HomePage
 import com.arcbueno.rheolicyfoeth.pages.home.HomeViewModel
@@ -131,13 +132,13 @@ fun NavigationGraph(navController: NavHostController) {
             val id = it.arguments?.getInt("id") ?: 0
             ItemDetailPage(navController, id)
         }
-//        composable(
-//            "${Routes.departmentDetails}/{id}",
-//            arguments = listOf(navArgument("id") { type = NavType.IntType })
-//        ) {
-//            val id = it.arguments?.getInt("id") ?: 0
-//            DepartmentDetailPage(navController, id)
-//        }
+        composable(
+            "${Routes.departmentDetails}/{id}",
+            arguments = listOf(navArgument("id") { type = NavType.IntType })
+        ) {
+            val id = it.arguments?.getInt("id") ?: 0
+            DepartmentDetailPage(navController, id)
+        }
         composable(
             "${Routes.updateItem}/{id}",
             arguments = listOf(navArgument("id") { type = NavType.IntType })
