@@ -49,7 +49,7 @@ object Config {
             factory { ItemListViewModel(get(), get(), get()) }
             factory { ItemDetailViewModel(get(), get(), get()) }
             factory { CreateDepartmentViewModel(get()) }
-            factory { DepartmentDetailViewModel(get(), get()) }
+            factory { DepartmentDetailViewModel(get(), get(), get()) }
 
         }
         startKoin {
