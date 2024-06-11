@@ -24,5 +24,5 @@ interface DepartmentDao {
     fun getAllDepartments(): List<Department>
 
     @Query("SELECT * from departments WHERE id = :id")
-    fun getById(id: Int): Department?
+    fun getById(id: Int): Department
 }

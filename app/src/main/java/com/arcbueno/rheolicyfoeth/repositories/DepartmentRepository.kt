@@ -30,11 +30,15 @@ class DepartmentRepository(val departmentDao: DepartmentDao) {
         departmentDao.insert(department)
     }
 
+    suspend fun update(department: Department) {
+        departmentDao.update(department)
+    }
+
     fun getAll(): List<Department> {
         return departmentDao.getAllDepartments()
     }
 
-    fun getById(id: Int): Department? {
+    fun getById(id: Int): Department {
         return departmentDao.getById(id)
     }
 }

@@ -27,17 +27,14 @@ import com.arcbueno.rheolicyfoeth.models.Department
 
 
 @Composable
-fun DepartmentListItem(modifier: Modifier = Modifier, department: Department) {
+fun DepartmentListItem(modifier: Modifier = Modifier, department: Department, onTap: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .padding(4.dp)
             .border(width = 2.dp, color = Color.LightGray, RoundedCornerShape(12.dp))
             .heightIn(min = 64.dp)
-            .clickable {
-                // TODO: Go to EditDepartment
-                Log.v("App", "clicked ${department.name}")
-            },
+            .clickable(onClick = onTap),
     ) {
         Row(
             modifier = Modifier
@@ -48,7 +45,7 @@ fun DepartmentListItem(modifier: Modifier = Modifier, department: Department) {
         ) {
             Column {
                 Text(department.name, fontSize = 24.sp)
-                if (department.description != null)
+                if (!department.description.isNullOrEmpty())
                     Text(department.description, color = Color.DarkGray)
             }
             Spacer(modifier = Modifier.weight(1f))

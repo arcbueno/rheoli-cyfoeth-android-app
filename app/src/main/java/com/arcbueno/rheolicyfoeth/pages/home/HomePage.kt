@@ -120,7 +120,7 @@ fun HomePage(
         Spacer(modifier = Modifier.padding(8.dp))
         LazyColumn() {
             items(state.departmentList) {
-                DepartmentListItem(department = it)
+                DepartmentListItem(department = it, onTap = {})
             }
         }
 

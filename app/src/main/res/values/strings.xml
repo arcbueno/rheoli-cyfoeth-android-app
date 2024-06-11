@@ -32,6 +32,10 @@
     <string name="empty">Não selecionado</string>
     <string name="finish_date">Data final</string>
     <string name="fields_not_filled">Existem campos não preenchidos</string>
+    <string name="add_new_department">Novo departamento</string>
+    <string name="department_name_textfield_placeholder">e.g. Recepção</string>
+    <string name="department_description_textfield_placeholder">e.g. Área para lazer</string>
+    <string name="department_name_is_required_error">O nome do departamento é obrigatório</string>
 
 
 </resources>

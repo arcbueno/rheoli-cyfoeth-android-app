@@ -22,7 +22,7 @@ class CreateItemViewModel(
     private val _uiState = MutableStateFlow(CreateItemState(isLoading = true))
     val state: StateFlow<CreateItemState>
         get() = _uiState.asStateFlow()
-    lateinit var initialItem: Item
+    private lateinit var initialItem: Item
 
     init {
         getDepartments()

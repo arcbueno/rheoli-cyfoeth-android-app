@@ -38,6 +38,7 @@ import com.arcbueno.rheolicyfoeth.data.AppDatabase
 import com.arcbueno.rheolicyfoeth.data.DepartmentDao
 import com.arcbueno.rheolicyfoeth.data.ItemDao
 import com.arcbueno.rheolicyfoeth.data.ItemMovingDao
+import com.arcbueno.rheolicyfoeth.pages.createdepartment.CreateDepartmentPage
 import com.arcbueno.rheolicyfoeth.pages.createitem.CreateItemPage
 import com.arcbueno.rheolicyfoeth.pages.departmentlist.DepartmentPage
 import com.arcbueno.rheolicyfoeth.pages.itemlist.ItemPage
@@ -120,6 +121,9 @@ fun NavigationGraph(navController: NavHostController) {
         composable(Routes.createItem) {
             CreateItemPage(navController)
         }
+        composable(Routes.createDepartment) {
+            CreateDepartmentPage(navController)
+        }
         composable(
             "${Routes.itemDetails}/{id}",
             arguments = listOf(navArgument("id") { type = NavType.IntType })
@@ -127,12 +131,26 @@ fun NavigationGraph(navController: NavHostController) {
             val id = it.arguments?.getInt("id") ?: 0
             ItemDetailPage(navController, id)
         }
+//        composable(
+//            "${Routes.departmentDetails}/{id}",
+//            arguments = listOf(navArgument("id") { type = NavType.IntType })
+//        ) {
+//            val id = it.arguments?.getInt("id") ?: 0
+//            DepartmentDetailPage(navController, id)
+//        }
         composable(
             "${Routes.updateItem}/{id}",
             arguments = listOf(navArgument("id") { type = NavType.IntType })
         ) {
             val id = it.arguments?.getInt("id") ?: 0
             CreateItemPage(navController, itemId = id)
+        }
+        composable(
+            "${Routes.updateDepartment}/{id}",
+            arguments = listOf(navArgument("id") { type = NavType.IntType })
+        ) {
+            val id = it.arguments?.getInt("id") ?: 0
+            CreateDepartmentPage(navController, departmentId = id)
         }
     }
 }
