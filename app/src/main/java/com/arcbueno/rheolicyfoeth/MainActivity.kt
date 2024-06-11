@@ -127,6 +127,13 @@ fun NavigationGraph(navController: NavHostController) {
             val id = it.arguments?.getInt("id") ?: 0
             ItemDetailPage(navController, id)
         }
+        composable(
+            "${Routes.updateItem}/{id}",
+            arguments = listOf(navArgument("id") { type = NavType.IntType })
+        ) {
+            val id = it.arguments?.getInt("id") ?: 0
+            CreateItemPage(navController, itemId = id)
+        }
     }
 }
 

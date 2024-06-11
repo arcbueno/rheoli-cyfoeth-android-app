@@ -35,6 +35,7 @@ import androidx.compose.material.icons.filled.ArrowForwardIos
 import androidx.compose.material.icons.filled.ArrowOutward
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -58,6 +59,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.arcbueno.rheolicyfoeth.R
+import com.arcbueno.rheolicyfoeth.Routes
 import com.arcbueno.rheolicyfoeth.components.CustomFormField
 import com.arcbueno.rheolicyfoeth.components.DateListItem
 import com.arcbueno.rheolicyfoeth.components.ItemMovingListItem
@@ -128,6 +130,14 @@ fun ItemDetailPage(
                     modifier = Modifier.padding(12.dp),
                     fontSize = 24.sp
                 )
+                Spacer(modifier = Modifier.weight(1f))
+                IconButton(onClick = {
+                    navHostController.navigate(
+                        "${Routes.updateItem}/${state.item!!.id}",
+                    )
+                }) {
+                    Icon(Icons.Default.Settings, "")
+                }
             }
             if (state.item != null)
                 Text(

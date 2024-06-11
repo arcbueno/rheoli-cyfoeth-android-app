@@ -48,21 +48,14 @@ import com.arcbueno.rheolicyfoeth.repositories.ItemRepository
 import com.arcbueno.rheolicyfoeth.ui.theme.RheoliCyfoethTheme
 import org.koin.compose.koinInject
 
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun PagePreview() {
-    RheoliCyfoethTheme {
-        CreateItemPage(NavHostController(LocalContext.current))
-    }
-}
-
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun CreateItemPage(
     navHostController: NavHostController,
-    createItemViewModel: CreateItemViewModel = koinInject()
+    createItemViewModel: CreateItemViewModel = koinInject(), itemId: Int? = null
 ) {
     val state by createItemViewModel.state.collectAsState()
+
 
     var itemName by remember { mutableStateOf("") }
     var itemDescription by remember { mutableStateOf("") }
@@ -72,6 +65,17 @@ fun CreateItemPage(
     var isHidden by remember { mutableStateOf(true) }
     var dropdownExpanded by remember { mutableStateOf(false) }
     var quantity by remember { mutableIntStateOf(1) }
+
+    if (itemId != null && !state.loadedInitialData && state.departmentList.isNotEmpty()) {
+        val item = createItemViewModel.setInitialData(itemId)
+        itemName = item.name
+        department = state.departmentList.filter { it.id == item.departmentId }.first()
+        itemDescription = item.description ?: ""
+        isHidden = item.isHidden
+        quantity = item.quantity.toInt()
+    }
+
+
 
     Column(modifier = Modifier.padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         val context = LocalContext.current
@@ -116,7 +120,9 @@ fun CreateItemPage(
         ExposedDropdownMenuBox(
             expanded = dropdownExpanded,
             onExpandedChange = {
-                dropdownExpanded = !dropdownExpanded
+                if (!state.loadedInitialData) {
+                    dropdownExpanded = !dropdownExpanded
+                }
             }
         ) {
             CustomFormField(
@@ -125,9 +131,9 @@ fun CreateItemPage(
                 placeholder = { Text(text = stringResource(id = R.string.department)) },
                 readOnly = true,
                 label = { Text(text = stringResource(id = R.string.department)) },
-                trailingIcon = {
+                trailingIcon = if (!state.loadedInitialData) ({
                     ExposedDropdownMenuDefaults.TrailingIcon(expanded = dropdownExpanded)
-                },
+                }) else null,
             )
 
             ExposedDropdownMenu(
