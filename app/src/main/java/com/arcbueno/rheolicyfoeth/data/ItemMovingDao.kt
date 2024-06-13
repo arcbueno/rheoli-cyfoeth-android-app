@@ -7,9 +7,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.arcbueno.rheolicyfoeth.models.Department
 import com.arcbueno.rheolicyfoeth.models.ItemMoving
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ItemMovingDao {

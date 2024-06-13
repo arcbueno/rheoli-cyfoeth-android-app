@@ -1,8 +1,6 @@
 package com.arcbueno.rheolicyfoeth.repositories
 
-import com.arcbueno.rheolicyfoeth.data.DepartmentDao
 import com.arcbueno.rheolicyfoeth.data.ItemDao
-import com.arcbueno.rheolicyfoeth.models.Department
 import com.arcbueno.rheolicyfoeth.models.Item
 
 class ItemRepository(val itemDao: ItemDao) {

@@ -1,12 +1,9 @@
 package com.arcbueno.rheolicyfoeth.pages.itemlist
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.arcbueno.rheolicyfoeth.models.Department
 import com.arcbueno.rheolicyfoeth.models.Item
-import com.arcbueno.rheolicyfoeth.pages.createitem.CreateItemState
 import com.arcbueno.rheolicyfoeth.repositories.DepartmentRepository
 import com.arcbueno.rheolicyfoeth.repositories.ItemRepository
 import com.arcbueno.rheolicyfoeth.repositories.KeyRepository
@@ -17,7 +14,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import java.util.Dictionary
 
 class ItemListViewModel(
     private val departmentRepository: DepartmentRepository,
@@ -60,9 +56,7 @@ class ItemListViewModel(
 
         viewModelScope.launch(Dispatchers.IO) {
             val dep = departmentRepository.getById(id)
-            if (dep == null) {
-                return@launch
-            }
+            
             _uiState.value.departmentById[id] = dep
             _uiState.value = _uiState.value.copy(departmentById = _uiState.value.departmentById)
         }

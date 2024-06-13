@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.arcbueno.rheolicyfoeth.models.Department
 import com.arcbueno.rheolicyfoeth.models.Item
-import com.arcbueno.rheolicyfoeth.pages.createitem.CreateItemState
 import com.arcbueno.rheolicyfoeth.repositories.DepartmentRepository
 import com.arcbueno.rheolicyfoeth.repositories.ItemRepository
 import kotlinx.coroutines.Dispatchers

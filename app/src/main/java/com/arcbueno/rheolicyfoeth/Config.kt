@@ -6,14 +6,6 @@ import com.arcbueno.rheolicyfoeth.data.DepartmentDao
 import com.arcbueno.rheolicyfoeth.data.ItemDao
 import com.arcbueno.rheolicyfoeth.data.ItemMovingDao
 import com.arcbueno.rheolicyfoeth.data.KeyDao
-import com.arcbueno.rheolicyfoeth.pages.createdepartment.CreateDepartmentViewModel
-import com.arcbueno.rheolicyfoeth.pages.createitem.CreateItemViewModel
-import com.arcbueno.rheolicyfoeth.pages.departmentdetail.DepartmentDetailViewModel
-import com.arcbueno.rheolicyfoeth.pages.departmentlist.DepartmentListViewModel
-import com.arcbueno.rheolicyfoeth.pages.home.HomeViewModel
-import com.arcbueno.rheolicyfoeth.pages.itemdetail.ItemDetailViewModel
-import com.arcbueno.rheolicyfoeth.pages.itemlist.ItemListViewModel
-import com.arcbueno.rheolicyfoeth.pages.settings.SettingsViewModel
 import com.arcbueno.rheolicyfoeth.repositories.DepartmentRepository
 import com.arcbueno.rheolicyfoeth.repositories.ItemMovingRepository
 import com.arcbueno.rheolicyfoeth.repositories.ItemRepository

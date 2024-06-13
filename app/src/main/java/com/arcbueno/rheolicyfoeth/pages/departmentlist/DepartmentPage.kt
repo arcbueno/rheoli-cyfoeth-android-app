@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Divider
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
@@ -25,9 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.arcbueno.rheolicyfoeth.R
 import com.arcbueno.rheolicyfoeth.Routes
-import com.arcbueno.rheolicyfoeth.components.CustomAppBar
 import com.arcbueno.rheolicyfoeth.components.DepartmentListItem
-import com.arcbueno.rheolicyfoeth.pages.createitem.CreateItemViewModel
 import org.koin.compose.koinInject
 
 

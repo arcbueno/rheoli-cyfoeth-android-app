@@ -3,12 +3,9 @@ package com.arcbueno.rheolicyfoeth.pages.itemdetail
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.room.util.copy
 import com.arcbueno.rheolicyfoeth.models.Department
 import com.arcbueno.rheolicyfoeth.models.Item
 import com.arcbueno.rheolicyfoeth.models.ItemMoving
-import com.arcbueno.rheolicyfoeth.pages.home.HomeState
-import com.arcbueno.rheolicyfoeth.pages.home.HomeViewModel
 import com.arcbueno.rheolicyfoeth.repositories.DepartmentRepository
 import com.arcbueno.rheolicyfoeth.repositories.ItemMovingRepository
 import com.arcbueno.rheolicyfoeth.repositories.ItemRepository
@@ -19,7 +16,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import org.koin.compose.koinInject
 
 class ItemDetailViewModel(
     val itemRepository: ItemRepository,
@@ -60,7 +56,6 @@ class ItemDetailViewModel(
     }
 
     fun getDepartmentById(id: Int): Department {
-        Log.v("a", "asd");
         return state.value.departmentList.single { it.id == id }
     }
 

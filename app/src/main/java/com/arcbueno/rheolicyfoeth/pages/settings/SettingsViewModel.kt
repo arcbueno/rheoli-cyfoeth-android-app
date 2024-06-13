@@ -2,14 +2,12 @@ package com.arcbueno.rheolicyfoeth.pages.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.arcbueno.rheolicyfoeth.pages.itemlist.ItemListState
 import com.arcbueno.rheolicyfoeth.repositories.KeyRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 class SettingsViewModel(val keyRepository: KeyRepository) : ViewModel() {

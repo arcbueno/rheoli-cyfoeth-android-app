@@ -1,8 +1,5 @@
 package com.arcbueno.rheolicyfoeth.pages.departmentdetail
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,14 +12,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.AlertDialog
-import androidx.compose.material.ExtendedFloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
-import androidx.compose.material.icons.filled.ArrowOutward
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -32,7 +27,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -45,9 +39,6 @@ import com.arcbueno.rheolicyfoeth.R
 import com.arcbueno.rheolicyfoeth.Routes
 import com.arcbueno.rheolicyfoeth.components.CustomFormField
 import com.arcbueno.rheolicyfoeth.components.ItemListItem
-import com.arcbueno.rheolicyfoeth.components.ItemMovingListItem
-import com.arcbueno.rheolicyfoeth.pages.itemdetail.ItemDetailViewModel
-import com.arcbueno.rheolicyfoeth.repositories.KeyRepository
 import org.koin.compose.koinInject
 
 @Composable

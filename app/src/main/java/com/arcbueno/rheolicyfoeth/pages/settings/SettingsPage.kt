@@ -14,17 +14,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ExposedDropdownMenuBox
-import androidx.compose.material.ExposedDropdownMenuDefaults
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Key
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
-import androidx.compose.material.icons.filled.ArrowForwardIos
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.runtime.Composable
@@ -42,12 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.arcbueno.rheolicyfoeth.R
 import com.arcbueno.rheolicyfoeth.components.CustomFormField
-import com.arcbueno.rheolicyfoeth.components.DateListItem
-import com.arcbueno.rheolicyfoeth.models.Department
-import com.arcbueno.rheolicyfoeth.models.ItemMoving
-import com.arcbueno.rheolicyfoeth.pages.itemlist.ItemListViewModel
 import org.koin.compose.koinInject
-import java.time.LocalDateTime
 
 @Composable
 fun SettingsPage(
@@ -61,7 +52,7 @@ fun SettingsPage(
         if (showBottomSheet.value) {
             BottomSheet(
                 onSave = {
-                    var result = viewModel.onChangeKey(it)
+                    val result = viewModel.onChangeKey(it)
                     if (result)
                         showBottomSheet.value = false
                 },
@@ -95,7 +86,7 @@ fun SettingsPage(
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BottomSheet(
     onDismiss: () -> Unit,

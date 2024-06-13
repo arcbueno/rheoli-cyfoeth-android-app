@@ -17,11 +17,6 @@ class DepartmentListViewModel(val departmentRepository: DepartmentRepository) :
     val state: StateFlow<DepartmentListState>
         get() = _uiState.asStateFlow()
 
-//    init {
-//        getAll()
-//    }
-
-
     fun getAll(): Unit {
         viewModelScope.launch(Dispatchers.IO) {
             val lista = departmentRepository.getAll()
