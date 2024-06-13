@@ -22,6 +22,7 @@ import androidx.compose.material.ExposedDropdownMenuDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -45,11 +46,10 @@ import org.koin.compose.koinInject
 @Composable
 fun CreateItemPage(
     navHostController: NavHostController,
-    createItemViewModel: CreateItemViewModel = CreateItemViewModel(koinInject(), koinInject()),
+    createItemViewModel: CreateItemViewModel = koinInject(),
     itemId: Int? = null
 ) {
     val state by createItemViewModel.state.collectAsState()
-
 
     var itemName by remember { mutableStateOf("") }
     var itemDescription by remember { mutableStateOf("") }
@@ -60,14 +60,17 @@ fun CreateItemPage(
     var dropdownExpanded by remember { mutableStateOf(false) }
     var quantity by remember { mutableIntStateOf(1) }
 
-    if (itemId != null && !state.loadedInitialData && state.departmentList.isNotEmpty()) {
-        val item = createItemViewModel.setInitialData(itemId)
-        itemName = item.name
-        department = state.departmentList.filter { it.id == item.departmentId }.first()
-        itemDescription = item.description ?: ""
-        isHidden = item.isHidden
-        quantity = item.quantity.toInt()
+
+    LaunchedEffect(Unit) {
+        if (itemId != null) {
+            val item = createItemViewModel.setInitialData(itemId)
+            itemName = item.name
+            itemDescription = item.description ?: ""
+            isHidden = item.isHidden
+            quantity = item.quantity.toInt()
+        }
     }
+
 
 
 
@@ -111,39 +114,40 @@ fun CreateItemPage(
             label = { Text(text = stringResource(id = R.string.item_quantity)) },
         )
         Spacer(modifier = Modifier.padding(8.dp))
-        ExposedDropdownMenuBox(
-            expanded = dropdownExpanded,
-            onExpandedChange = {
-                if (!state.loadedInitialData) {
-                    dropdownExpanded = !dropdownExpanded
+        if (itemId == null)
+            ExposedDropdownMenuBox(
+                expanded = dropdownExpanded,
+                onExpandedChange = {
+                    if (!state.isUpdate) {
+                        dropdownExpanded = !dropdownExpanded
+                    }
                 }
-            }
-        ) {
-            CustomFormField(
-                text = department?.name ?: "",
-                onValueChange = {},
-                placeholder = { Text(text = stringResource(id = R.string.department)) },
-                readOnly = true,
-                label = { Text(text = stringResource(id = R.string.department)) },
-                trailingIcon = if (!state.loadedInitialData) ({
-                    ExposedDropdownMenuDefaults.TrailingIcon(expanded = dropdownExpanded)
-                }) else null,
-            )
+            ) {
+                CustomFormField(
+                    text = department?.name ?: "",
+                    onValueChange = {},
+                    placeholder = { Text(text = stringResource(id = R.string.department)) },
+                    readOnly = true,
+                    label = { Text(text = stringResource(id = R.string.department)) },
+                    trailingIcon = if (!state.isUpdate) ({
+                        ExposedDropdownMenuDefaults.TrailingIcon(expanded = dropdownExpanded)
+                    }) else null,
+                )
 
-            ExposedDropdownMenu(
-                expanded = !state.isLoading && dropdownExpanded,
-                onDismissRequest = { dropdownExpanded = false }) {
-                state.departmentList.forEach { option: Department ->
-                    DropdownMenuItem(
-                        content = { Text(option.name) },
-                        onClick = {
-                            dropdownExpanded = false
-                            department = option
-                        }
-                    )
+                ExposedDropdownMenu(
+                    expanded = !state.isLoading && dropdownExpanded,
+                    onDismissRequest = { dropdownExpanded = false }) {
+                    state.departmentList.forEach { option: Department ->
+                        DropdownMenuItem(
+                            content = { Text(option.name) },
+                            onClick = {
+                                dropdownExpanded = false
+                                department = option
+                            }
+                        )
+                    }
                 }
             }
-        }
         Spacer(modifier = Modifier.height(12.dp))
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
@@ -175,7 +179,7 @@ fun CreateItemPage(
                     createItemViewModel.createItem(
                         itemName,
                         itemDescription,
-                        department!!,
+                        department,
                         isHidden
                     )
 

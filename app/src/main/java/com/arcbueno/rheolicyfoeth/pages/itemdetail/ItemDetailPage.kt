@@ -61,7 +61,7 @@ import java.time.LocalDateTime
 @Composable
 fun ItemDetailPage(
     navHostController: NavHostController, itemId: Int,
-    viewModel: ItemDetailViewModel = ItemDetailViewModel(koinInject(), koinInject(), koinInject())
+    viewModel: ItemDetailViewModel = koinInject(),
 ) {
     val state by viewModel.state.collectAsState()
     var showBottomSheet by remember { mutableStateOf(false) }

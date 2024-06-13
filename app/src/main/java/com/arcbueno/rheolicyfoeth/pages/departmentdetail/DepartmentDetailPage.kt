@@ -44,13 +44,8 @@ import org.koin.compose.koinInject
 @Composable
 fun DepartmentDetailPage(
     navHostController: NavHostController, departmentId: Int,
-    viewModel: DepartmentDetailViewModel = DepartmentDetailViewModel(
-        koinInject(),
-        koinInject(),
-        koinInject()
-    ),
-
-    ) {
+    viewModel: DepartmentDetailViewModel = koinInject(),
+) {
     val state by viewModel.state.collectAsState()
     viewModel.setInitialData(departmentId)
 

@@ -19,7 +19,7 @@ class CreateDepartmentViewModel(
     private val _uiState = MutableStateFlow(CreateDepartmentState(isLoading = false))
     val state: StateFlow<CreateDepartmentState>
         get() = _uiState.asStateFlow()
-    private lateinit var initialDepartment: Department
+    private var initialDepartment: Department? = null
 
     fun validate(itemName: String?): Int? {
         if (itemName.isNullOrEmpty()) {
@@ -37,7 +37,7 @@ class CreateDepartmentViewModel(
             }).await()
         }
         initialDepartment = department
-        _uiState.value = _uiState.value.copy(loadedInitialData = true)
+        _uiState.value = _uiState.value.copy(isUpdate = true, isLoading = false)
 
         return department
     }
@@ -48,9 +48,9 @@ class CreateDepartmentViewModel(
     ): Boolean {
         return try {
             viewModelScope.launch(Dispatchers.IO) {
-                if (state.value.loadedInitialData) {
+                if (state.value.isUpdate) {
                     departmentRepository.update(
-                        initialDepartment.copy(
+                        initialDepartment!!.copy(
                             name = departmentName,
                             description = departmentDescription.ifEmpty { null },
                         )
@@ -71,5 +71,5 @@ class CreateDepartmentViewModel(
 
 data class CreateDepartmentState(
     val isLoading: Boolean, val error: String? = null,
-    val loadedInitialData: Boolean = false,
+    val isUpdate: Boolean = false,
 )
